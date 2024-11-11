@@ -40,6 +40,9 @@ ALLOWED_HOSTS = [
     '.herokuapp.com'
     ]
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://8000-houndhunger-drfapi-bsxyf3jtkgi.ws.codeinstitute-ide.net"
+]
 
 # Application definition
 
