@@ -65,7 +65,7 @@ DEBUG = 'DEV' in os.environ
 ALLOWED_HOSTS = [
     'localhost',
     '8000-houndhunger-drfapi-bsxyf3jtkgi.ws.codeinstitute-ide.net',
-    'drf-api-dp-e6ac617a981a.herokuapp.com'
+     os.environ.get('ALLOWED_HOST')
     ]
 
 CSRF_TRUSTED_ORIGINS = [
