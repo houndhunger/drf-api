@@ -20,9 +20,17 @@ class Notification(models.Model):
         max_length=20, choices=NOTIFICATION_TYPES, default='post_update'
     )
     message = models.TextField()
-    reference_id = models.PositiveIntegerField(null=True, blank=True)  # Reference ID to relate to the post/comment
     created_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
+
+    
+    post_id = models.ForeignKey(
+        'posts.Post',
+        related_name='notifications', 
+        on_delete=models.CASCADE,
+        null=True, 
+        blank=True
+    )
 
     def __str__(self):
         return f"Notification for {self.user.username}: {self.message}"
