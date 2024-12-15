@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from posts.models import Post
 
 class Notification(models.Model):
     NOTIFICATION_TYPES = [
@@ -7,6 +8,7 @@ class Notification(models.Model):
         ('comment', 'Comment'),
         ('follow', 'Follow'),
         ('post_update', 'Post Update'),
+        ('new_post', 'New Post'),
     ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
@@ -25,7 +27,7 @@ class Notification(models.Model):
 
     
     post_id = models.ForeignKey(
-        'posts.Post',
+        Post,  # Use the correct model reference
         related_name='notifications', 
         on_delete=models.CASCADE,
         null=True, 

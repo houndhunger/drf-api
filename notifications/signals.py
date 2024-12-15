@@ -16,9 +16,11 @@ def notify_new_post(sender, instance, created, **kwargs):
         for follower in followers:
             Notification.objects.create(
                 user=follower.owner,
+                sender=instance.owner,
                 notification_type='new_post',
                 is_read=False,
-                message=f"{instance.owner.username} created a new post: {instance.title}"
+                message=f"{instance.owner.username} created a new post: {instance.title}",
+                post_id=instance
             )
 
 # Notification for likes
@@ -30,7 +32,8 @@ def notify_new_like(sender, instance, created, **kwargs):
             sender=instance.owner,  # The user who liked the post
             notification_type='like',
             is_read=False,
-            message=f"{instance.owner.username} liked your post: {instance.post.title}"
+            message=f"{instance.owner.username} liked your post: {instance.post.title}",
+            post_id=instance.post
 
         )
 
@@ -41,7 +44,7 @@ def notify_new_follower(sender, instance, created, **kwargs):
         Notification.objects.create(
             user=instance.followed,
             sender=instance.owner,  # The user who is following
-            notification_type='new_follower',
+            notification_type='follow',
             is_read=False,
             message=f"{instance.owner.username} started following you."
         )
@@ -54,5 +57,6 @@ def notify_new_comment(sender, instance, created, **kwargs):
             user=instance.post.owner,
             notification_type='comment',
             is_read=False,
-            message=f"{instance.owner.username} commented on your post: {instance.post.title}"
+            message=f"{instance.owner.username} commented on your post: {instance.post.title}",
+            post_id=instance.post
         )
