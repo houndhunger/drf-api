@@ -17,6 +17,21 @@ from django.contrib import admin
 from django.urls import path, include
 from .views import root_route, logout_route
 
+from django.conf import settings
+from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import path
+
+# Your URL patterns
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    # Add other URL patterns here
+]
+
+# Serve static files in development
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
 urlpatterns = [
     path('', root_route),
     path('admin/', admin.site.urls),
