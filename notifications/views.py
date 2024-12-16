@@ -11,7 +11,7 @@ class NotificationList(generics.ListAPIView):
     serializer_class = NotificationSerializer
 
     def get_queryset(self):
-        return Notification.objects.filter(user=self.request.user)
+        return Notification.objects.filter(owner=self.request.user)
 
 class NotificationUpdate(generics.UpdateAPIView):
     """
@@ -24,7 +24,7 @@ class NotificationUpdate(generics.UpdateAPIView):
     def perform_update(self, serializer):
         notification = self.get_object()  # Get the notification from the URL parameter
         # Ensure the notification belongs to the logged-in user
-        if notification.user != self.request.user:
+        if notification.owner != self.request.user:
             raise NotFound("Notification not found or does not belong to the logged-in user.")
         # Mark as read
         serializer.save(is_read=True)

@@ -35,4 +35,4 @@ class Notification(models.Model):
     )
 
     def __str__(self):
-        return f"Notification for {self.user.username}: {self.message}"
+        return f"Notification for {self.owner.username}: {self.message}"
