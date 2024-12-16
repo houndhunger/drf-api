@@ -11,7 +11,7 @@ class Notification(models.Model):
         ('new_post', 'New Post'),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
     sender = models.ForeignKey(
         User,
         on_delete=models.CASCADE,

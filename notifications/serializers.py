@@ -26,5 +26,5 @@ class NotificationSerializer(serializers.ModelSerializer):
         model = Notification
         fields = [
             'id', 'notification_type', 'message', 'created_at', 'is_read',
-            'user', 'sender_username', 'sender_id', 'post_id', 'post_title'
+            'owner', 'sender_username', 'sender_id', 'post_id', 'post_title'
         ]

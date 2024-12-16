@@ -1,4 +1,5 @@
 from rest_framework import generics, permissions
+from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Notification
 from .serializers import NotificationSerializer
 
@@ -27,3 +28,15 @@ class NotificationUpdate(generics.UpdateAPIView):
             raise NotFound("Notification not found or does not belong to the logged-in user.")
         # Mark as read
         serializer.save(is_read=True)
+
+class NotificationDetail(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Retrieve a notification and delete it if the user is the owner.
+    """
+    serializer_class = NotificationSerializer
+    permission_classes = [IsOwnerOrReadOnly]
+    queryset = Notification.objects.all()
+
+    def perform_destroy(self, instance):
+        # You could add any custom logic here if needed before deleting
+        instance.delete()
