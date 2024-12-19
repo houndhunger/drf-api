@@ -15,7 +15,7 @@ class NotificationList(generics.ListAPIView):
         return Notification.objects.filter(owner=self.request.user)
 
 class NotificationUpdate(generics.UpdateAPIView):
-     """
+    """
     Mark a notification as read when clicked.
     """
     permission_classes = [permissions.IsAuthenticated]
