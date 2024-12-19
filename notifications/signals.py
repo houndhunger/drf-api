@@ -28,7 +28,7 @@ def notify_new_post(sender, instance, created, **kwargs):
 def notify_new_like(sender, instance, created, **kwargs):
     if created:
         Notification.objects.create(
-            user=instance.post.owner,  # Assuming post has a 'user' field for the owner
+            owner=instance.post.owner,  # Assuming post has a 'user' field for the owner
             sender=instance.owner,  # The user who liked the post
             notification_type='like',
             is_read=False,
@@ -42,7 +42,7 @@ def notify_new_like(sender, instance, created, **kwargs):
 def notify_new_follower(sender, instance, created, **kwargs):
     if created:
         Notification.objects.create(
-            user=instance.followed,
+            owner=instance.followed,
             sender=instance.owner,  # The user who is following
             notification_type='follow',
             is_read=False,
@@ -54,7 +54,7 @@ def notify_new_follower(sender, instance, created, **kwargs):
 def notify_new_comment(sender, instance, created, **kwargs):
     if created:
         Notification.objects.create(
-            user=instance.post.owner,
+            owner=instance.post.owner,
             notification_type='comment',
             is_read=False,
             message=f"{instance.owner.username} commented on your post: {instance.post.title}",

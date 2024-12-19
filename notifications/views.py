@@ -1,5 +1,6 @@
 from rest_framework import generics, permissions
 from drf_api.permissions import IsOwnerOrReadOnly
+from rest_framework.exceptions import NotFound
 from .models import Notification
 from .serializers import NotificationSerializer
 
@@ -14,8 +15,8 @@ class NotificationList(generics.ListAPIView):
         return Notification.objects.filter(owner=self.request.user)
 
 class NotificationUpdate(generics.UpdateAPIView):
-    """
-    Mark a notification as read.
+     """
+    Mark a notification as read when clicked.
     """
     permission_classes = [permissions.IsAuthenticated]
     serializer_class = NotificationSerializer
@@ -28,6 +29,15 @@ class NotificationUpdate(generics.UpdateAPIView):
             raise NotFound("Notification not found or does not belong to the logged-in user.")
         # Mark as read
         serializer.save(is_read=True)
+    
+    def get_object(self):
+        """
+        Override to ensure we fetch the correct notification based on URL parameter.
+        """
+        obj = super().get_object()
+        obj.is_read = True  # Mark as read
+        obj.save()  # Save the updated notification
+        return obj
 
 class NotificationDetail(generics.RetrieveUpdateDestroyAPIView):
     """
