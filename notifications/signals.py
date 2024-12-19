@@ -15,7 +15,7 @@ def notify_new_post(sender, instance, created, **kwargs):
         followers = instance.owner.followed.all()
         for follower in followers:
             Notification.objects.create(
-                user=follower.owner,
+                owner=follower.owner,
                 sender=instance.owner,
                 notification_type='new_post',
                 is_read=False,
