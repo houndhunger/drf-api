@@ -8,7 +8,7 @@ def notify_new_follower(sender, instance, created, **kwargs):
     if created:  # Trigger only when a new follower is created
         # Create a notification (adjust fields as per your model)
          Notification.objects.create(
-            user=instance.followed,  # The user being followed
+            owner=instance.followed,  # The user being followed
             sender=instance.owner,  # The user who is following
             notification_type='follow',  # Set the type to 'follow'
             message=f'{instance.owner.username} started following you!'  # Customize message
