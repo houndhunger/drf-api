@@ -54,6 +54,23 @@ class NotificationDetail(generics.RetrieveUpdateDestroyAPIView):
         # You could add any custom logic here if needed before deleting
         instance.delete()
 
+class NotificationMarkReadView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensures the user is authenticated
+
+    def post(self, request, notification_id, *args, **kwargs):
+        """
+        Marks a specific notification as read for the authenticated user.
+        """
+        try:
+            # Retrieve the notification for the authenticated user by its ID
+            notification = Notification.objects.get(id=notification_id, owner=request.user)
+            # Mark the notification as read
+            notification.is_read = True
+            notification.save()
+            return Response({"detail": "Notification marked as read."}, status=status.HTTP_200_OK)
+        except Notification.DoesNotExist:
+            return Response({"detail": "Notification not found or not owned by the user."}, status=status.HTTP_404_NOT_FOUND)
+
 class NotificationMarkAllReadView(APIView):
     permission_classes = [IsAuthenticated]  # Ensures the user is authenticated
 
