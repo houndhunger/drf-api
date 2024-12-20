@@ -1,5 +1,8 @@
-from rest_framework import generics, permissions
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status, generics, permissions
 from drf_api.permissions import IsOwnerOrReadOnly
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.exceptions import NotFound
 from .models import Notification
 from .serializers import NotificationSerializer
@@ -50,3 +53,28 @@ class NotificationDetail(generics.RetrieveUpdateDestroyAPIView):
     def perform_destroy(self, instance):
         # You could add any custom logic here if needed before deleting
         instance.delete()
+
+class NotificationMarkAllReadView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensures the user is authenticated
+
+    def post(self, request, *args, **kwargs):
+        # Retrieve notifications for the authenticated user that are not read
+        notifications = Notification.objects.filter(owner=request.user, is_read=False)
+
+        if notifications.exists():
+            notifications.update(is_read=True)  # Mark them as read
+            return Response({"detail": "All notifications marked as read."}, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "No unread notifications found."}, status=status.HTTP_404_NOT_FOUND)
+
+class NotificationDeleteAllReadView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request, *args, **kwargs):
+        # Delete all notifications marked as read for the logged-in user
+        notifications = Notification.objects.filter(owner=request.user, is_read=True)
+        if notifications.exists():
+            notifications.delete()  # Delete read notifications
+            return Response({"detail": "All read notifications deleted."}, status=status.HTTP_204_NO_CONTENT)
+        else:
+            return Response({"detail": "No read notifications found."}, status=status.HTTP_404_NOT_FOUND)
