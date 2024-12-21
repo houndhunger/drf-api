@@ -54,7 +54,8 @@ def notify_new_follower(sender, instance, created, **kwargs):
 def notify_new_comment(sender, instance, created, **kwargs):
     if created:
         Notification.objects.create(
-            owner=instance.post.owner,
+            owner=instance.owner,
+            sender=instance.owner,  # Comment owner as sender
             notification_type='comment',
             is_read=False,
             message=f"{instance.owner.username} commented on your post: {instance.post.title}",
