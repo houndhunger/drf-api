@@ -71,6 +71,23 @@ class NotificationMarkReadView(APIView):
         except Notification.DoesNotExist:
             return Response({"detail": "Notification not found or not owned by the user."}, status=status.HTTP_404_NOT_FOUND)
 
+class NotificationMarkUnreadView(APIView):
+    permission_classes = [IsAuthenticated]  # Ensures the user is authenticated
+
+    def post(self, request, notification_id, *args, **kwargs):
+        """
+        Marks a specific notification as unread for the authenticated user.
+        """
+        try:
+            # Retrieve the notification for the authenticated user by its ID
+            notification = Notification.objects.get(id=notification_id, owner=request.user)
+            # Mark the notification as unread
+            notification.is_read = False
+            notification.save()
+            return Response({"detail": "Notification marked as unread."}, status=status.HTTP_200_OK)
+        except Notification.DoesNotExist:
+            return Response({"detail": "Notification not found or not owned by the user."}, status=status.HTTP_404_NOT_FOUND)
+
 class NotificationMarkAllReadView(APIView):
     permission_classes = [IsAuthenticated]  # Ensures the user is authenticated
 
