@@ -1,3 +1,8 @@
+"""
+URL configuration for the Likes app.
+
+Defines URL patterns for listing, creating, retrieving, and deleting likes.
+"""
 from django.urls import path
 from likes import views
 

@@ -1,3 +1,7 @@
+"""
+Views for handling posts in the API.
+Includes views for listing, creating, retrieving, updating, and deleting posts.
+"""
 from django.db.models import Count
 from rest_framework import generics, permissions, filters
 from django_filters.rest_framework import DjangoFilterBackend

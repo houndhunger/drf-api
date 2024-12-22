@@ -1,3 +1,8 @@
+"""
+Views for the 'profiles' app, handling the listing and details of user
+profiles. Includes views to list profiles and retrieve or update individual
+profiles.
+"""
 from django.db.models import Count
 from rest_framework import generics, filters
 from django_filters.rest_framework import DjangoFilterBackend
@@ -33,6 +38,7 @@ class ProfileList(generics.ListAPIView):
         'owner__following__created_at',
         'owner__followed__created_at',
     ]
+
 
 class ProfileDetail(generics.RetrieveUpdateAPIView):
     """

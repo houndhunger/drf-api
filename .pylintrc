@@ -1,0 +1,17 @@
+[MASTER]
+# List of files or directories to be skipped. 
+# Directories should be specified with a trailing slash. 
+# Glob patterns can be used.
+ignore=tests, migrations, settings.py, *test*, *migrations*, *.pyc, *__init__*
+ignore-patterns=.vscode/arctictern.py
+
+load-plugins=pylint_django
+
+[MESSAGES CONTROL]
+# Or you can ignore specific warnings
+#disable=missing-docstring, invalid-name, too-few-public-methods
+disable=too-few-public-methods, imported-auth-user
+
+[Django]
+# Set the Django settings module
+django-settings-module=drf_api.settings

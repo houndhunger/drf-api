@@ -1,3 +1,7 @@
+"""
+Comment model to represent a user's comment on a post.
+Each comment is linked to a User and a Post, and contains text content.
+"""
 from django.db import models
 from django.contrib.auth.models import User
 from posts.models import Post
@@ -14,7 +18,9 @@ class Comment(models.Model):
     content = models.TextField()
 
     class Meta:
+
         ordering = ['-created_at']
 
     def __str__(self):
+        """Returns the content of the comment as the string representation."""
         return self.content

@@ -1,3 +1,8 @@
+"""
+Models for the Post application, including the Post model and its
+relationships. The Post model is associated with the User model for the
+owner and includes features such as image handling and image filters.
+"""
 from django.db import models
 from django.contrib.auth.models import User
 

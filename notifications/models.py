@@ -1,8 +1,17 @@
+"""
+Models for the Notification system, which handles notifications
+for events such as likes, comments, follows, and post updates.
+"""
 from django.db import models
 from django.contrib.auth.models import User
 from posts.models import Post
 
+
 class Notification(models.Model):
+    """
+    Represents a notification for a user, including the sender,
+    type of notification, related message, and associated post.
+    """
     NOTIFICATION_TYPES = [
         ('like', 'Like'),
         ('comment', 'Comment'),
@@ -11,7 +20,10 @@ class Notification(models.Model):
         ('new_post', 'New Post'),
     ]
 
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='notifications')
+    owner = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name='notifications'
+        )
     sender = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
@@ -25,12 +37,11 @@ class Notification(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     is_read = models.BooleanField(default=False)
 
-    
     post_id = models.ForeignKey(
         Post,  # Use the correct model reference
-        related_name='notifications', 
+        related_name='notifications',
         on_delete=models.CASCADE,
-        null=True, 
+        null=True,
         blank=True
     )
 

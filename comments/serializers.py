@@ -1,3 +1,6 @@
+"""
+Serializers for the Comment model to handle data validation and serialization.
+"""
 from django.contrib.humanize.templatetags.humanize import naturaltime
 from rest_framework import serializers
 from .models import Comment
@@ -16,16 +19,29 @@ class CommentSerializer(serializers.ModelSerializer):
     updated_at = serializers.SerializerMethodField()
 
     def get_is_owner(self, obj):
+        """
+        Returns whether the current user is the owner of the comment.
+        """
         request = self.context['request']
         return request.user == obj.owner
 
     def get_created_at(self, obj):
+        """
+        Returns the 'created_at' field as a human-readable time string.
+        """
         return naturaltime(obj.created_at)
 
     def get_updated_at(self, obj):
+        """
+        Returns the 'updated_at' field as a human-readable time string.
+        """
         return naturaltime(obj.updated_at)
 
     class Meta:
+        """
+        Specifies the model (Comment) and the fields to serialize,
+        including owner details, timestamps, and content.
+        """
         model = Comment
         fields = [
             'id', 'owner', 'is_owner', 'profile_id', 'profile_image',

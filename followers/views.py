@@ -1,3 +1,7 @@
+"""
+Views related to followers, including following users, unfollowing users,
+and listing followers.
+"""
 from rest_framework import generics, permissions
 from drf_api.permissions import IsOwnerOrReadOnly
 from .models import Follower

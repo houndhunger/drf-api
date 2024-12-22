@@ -1,3 +1,8 @@
+"""
+Views for the Likes app.
+
+Provides API views for listing, creating, retrieving, and deleting likes.
+"""
 from rest_framework import generics, permissions
 from drf_api.permissions import IsOwnerOrReadOnly
 from likes.models import Like

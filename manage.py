@@ -1,5 +1,7 @@
 #!/usr/bin/env python
+#pylint: disable=C0415: Import outside toplevel (django.core.management.execute_from_command_line) (import-outside-toplevel)
 """Django's command-line utility for administrative tasks."""
+#
 import os
 import sys
 

@@ -1,3 +1,7 @@
+"""
+This module contains views for the DRF API, including the root route and logout functionality.
+It handles the root route and logs out users by clearing authentication cookies.
+"""
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .settings import (
@@ -8,6 +12,10 @@ from .settings import (
 
 @api_view()
 def root_route(request):
+    """
+    Returns a welcome message for the API.
+    This view is called when a user accesses the root of the API.
+    """
     return Response({
         "message": "Welcome to my drf API!"
     })
@@ -15,6 +23,9 @@ def root_route(request):
 # dj-rest-auth logout view fix
 @api_view(['POST'])
 def logout_route(request):
+    """
+    Logs out the user by clearing JWT cookies.
+    """
     response = Response()
     response.set_cookie(
         key=JWT_AUTH_COOKIE,

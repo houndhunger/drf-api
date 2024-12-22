@@ -1,26 +1,43 @@
+"""
+Serializers for the Notification model, including customized fields
+such as sender's username, sender's ID, and post title for API responses.
+"""
 from rest_framework import serializers
+from posts.models import Post
 from .models import Notification
-from posts.models import Post  # To access the post's title
-from django.contrib.auth.models import User  # To reference User in the sender
+
 
 class NotificationSerializer(serializers.ModelSerializer):
+    """
+    Serializer class for Notification model to customize fields such as
+    sender's username, sender's ID, and post title.
+    """
     sender_username = serializers.SerializerMethodField()
-    sender_id = serializers.SerializerMethodField()  # Add sender_id field
-    post_title = serializers.SerializerMethodField()  # Add a field for post title
+    sender_id = serializers.SerializerMethodField()
+    post_title = serializers.SerializerMethodField()
 
     def get_sender_username(self, obj):
-        sender = obj.sender # Access the user directly from the notification instance
+        """
+        Retrieves the username of the sender for the notification.
+        """
+        sender = obj.sender
         return sender.username if sender else None
 
     def get_sender_id(self, obj):
+        """
+        Retrieves the sender's ID for the notification.
+        """
         sender = obj.sender
-        return sender.id if sender else None  # Return the sender's ID if available
+        return sender.id if sender else None
 
     def get_post_title(self, obj):
-        if obj.post_id:  # Check if post_id is not null
-            post = Post.objects.get(id=obj.post_id.id)  # If obj.post_id is a Post object
+        """
+        Retrieves the title of the post associated with the notification.
+        """
+        if obj.post_id:
+            post = Post.objects.get(id=obj.post_id.id)
             return post.title if post else None
-        return None  # Return None if no related post
+        return None
 
     class Meta:
         model = Notification

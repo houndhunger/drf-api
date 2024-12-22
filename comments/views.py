@@ -1,3 +1,8 @@
+"""
+Manage comments for posts, including listing all comments or creating a new
+comment if logged in, as well as retrieving, updating, or deleting a comment
+based on ownership.
+"""
 from rest_framework import generics, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from drf_api.permissions import IsOwnerOrReadOnly

@@ -1,3 +1,7 @@
+"""
+URL configuration for the 'profiles' app. This includes the routes for
+listing profiles and viewing or updating individual profiles.
+"""
 from django.urls import path
 from profiles import views
 

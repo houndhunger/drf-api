@@ -1,9 +1,18 @@
+"""
+Models for the 'profiles' app, defining the Profile model and signal to
+create a profile upon user creation.
+"""
 from django.db import models
 from django.db.models.signals import post_save
 from django.contrib.auth.models import User
 
 
 class Profile(models.Model):
+    """
+    Profile model for the user. Each user can have one profile with a name,
+    content, and image. The profile is automatically created when a new user
+    is created.
+    """
     owner = models.OneToOneField(User, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -20,7 +29,10 @@ class Profile(models.Model):
         return f"{self.owner}'s profile"
 
 
-def create_profile(sender, instance, created, **kwargs):
+def create_profile(instance, created, **kwargs):
+    """
+    Creates a Profile for the User instance when a new user is created.
+    """
     if created:
         Profile.objects.create(owner=instance)
 
