@@ -206,13 +206,32 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
 
+# URL prefix for serving static files
 STATIC_URL = '/static/'
-#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-#STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
-STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
+# Storage backend for static files in production:
+# Uncomment the desired STATICFILES_STORAGE depending on the hosting setup.
+
+# For WhiteNoise (serves static files directly from the app)
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# For Django's built-in storage with hashed filenames (used for versioning)
+# STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.ManifestStaticFilesStorage'
+
+# For Cloudinary storage (used for cloud-hosted static files)
+# STATICFILES_STORAGE = 'cloudinary_storage.storage.StaticHashedCloudinaryStorage'
+
+# Directory where all static files will be collected by `collectstatic`
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_DIRS = [os.path.join(BASE_DIR, 'static')]
+
+# Directory to store app-specific static files during development.
+# This is used to collect files like CSS, JS, or images added to the project.
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+
+# Note:
+# STATIC_DIRS is not a recognized Django setting and was commented out.
+# Ensure the correct usage of STATICFILES_DIRS for additional static directories.
+# STATIC_DIRS = [os.path.join(BASE_DIR, 'static')] 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
