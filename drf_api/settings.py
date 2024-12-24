@@ -21,6 +21,14 @@ if os.path.exists('env.py'):
 CLOUDINARY_STORAGE = {
     'CLOUDINARY_URL': os.environ.get('CLOUDINARY_URL')
 }
+
+# CLOUDINARY_URL = os.getenv('CLOUDINARY_URL', '')
+# cloudinary.config(
+#     cloud_name = os.getenv('CLOUDINARY_CLOUD_NAME'),
+#     api_key = os.getenv('CLOUDINARY_API_KEY'),
+#     api_secret = os.getenv('CLOUDINARY_API_SECRET')
+# )
+
 MEDIA_URL = '/media/'
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
@@ -81,19 +89,19 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'cloudinary_storage',
     'django.contrib.staticfiles',
+    'cloudinary_storage',
     'cloudinary',
+    'corsheaders',
     'rest_framework',
     'django_filters',
     'rest_framework.authtoken',
     'dj_rest_auth',
-    'django.contrib.sites',
+    'dj_rest_auth.registration',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    'dj_rest_auth.registration',
-    'corsheaders',
+    'django.contrib.sites',
 
     'profiles',
     'posts',
@@ -232,14 +240,6 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # STATIC_DIRS is not a recognized Django setting and was commented out.
 # Ensure the correct usage of STATICFILES_DIRS for additional static directories.
 # STATIC_DIRS = [os.path.join(BASE_DIR, 'static')] 
-
-
-
-
-
-
-
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
