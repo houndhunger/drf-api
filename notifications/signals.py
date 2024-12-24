@@ -74,7 +74,7 @@ def notify_new_comment(instance, created, **kwargs):
     """
     if created:
         Notification.objects.create(
-            owner=instance.owner,
+            owner=instance.post.owner,
             sender=instance.owner,
             notification_type='comment',
             is_read=False,
